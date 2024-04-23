@@ -1,9 +1,13 @@
 import * as echarts from 'echarts';
 import { useEffect } from 'react'
+import { useContext } from 'react'
+import { ThemeContext } from '../../../App';
 
 export const useBarChart = () => {
+    const theme = useContext(ThemeContext);
+
     useEffect(() => {
-        const barChart = echarts.init(document.getElementById('bar-chart'));
+        const barChart = echarts.init(document.getElementById('bar-chart'), theme);
 
         barChart.setOption({
             title: {
@@ -21,5 +25,5 @@ export const useBarChart = () => {
                 }
             ]
         });
-    }, [])
+    }, [theme])
 }

@@ -1,34 +1,20 @@
 import './App.css';
-import { useBarChart } from './hooks/use-bar-chart';
-import { usePieChart } from './hooks/use-pie-chart';
-import { useSheet } from './hooks/use-sheet';
-import { Chart, ChartContainer, Container, Sheet } from './styles';
-import { DataGrid } from '@mui/x-data-grid';
+import { createContext } from 'react'
+import { Home } from './pages/home/home';
+import { useState } from 'react'
+
+export const ThemeContext = createContext('light');
 
 function App() {
-  useBarChart()
-  usePieChart()
-  const { rows, columns } = useSheet()
 
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  }
   return (
-    <Container>
-      <ChartContainer>
-        <Chart id='bar-chart'></Chart>
-        <Chart id='pie-chart'></Chart>
-      </ChartContainer>
-
-      <Sheet>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 3 },
-            },
-          }}
-        />
-      </Sheet>
-    </Container>
+    <ThemeContext.Provider value={theme}>
+      <Home onToggleTheme={toggleTheme} />
+    </ThemeContext.Provider>
   );
 }
 
