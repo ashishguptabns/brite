@@ -9,29 +9,29 @@ import { useContext } from 'react'
 export const Home = ({ onToggleTheme }) => {
     const theme = useContext(ThemeContext);
 
-    useBarChart()
-    usePieChart()
-    const { rows, columns } = useSheet()
+    const [barChartLoaded] = useBarChart('someId')
+    const [pieChartLoaded] = usePieChart('someId')
+    const { rows, cols } = useSheet('someId')
 
     return (
         <Container>
             <Theme onClick={onToggleTheme}>{theme}</Theme>
             <ChartContainer>
-                <Chart id='bar-chart'></Chart>
-                <Chart id='pie-chart'></Chart>
+                <Chart id='bar-chart' />
+                <Chart id='pie-chart' />
             </ChartContainer>
 
-            <Sheet>
+            {rows.length > 0 && <Sheet>
                 <DataGrid
                     rows={rows}
-                    columns={columns}
+                    columns={cols}
                     initialState={{
                         pagination: {
                             paginationModel: { page: 0, pageSize: 4 },
                         },
                     }}
                 />
-            </Sheet>
+            </Sheet>}
         </Container>
     )
 }

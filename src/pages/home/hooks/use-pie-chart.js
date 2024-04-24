@@ -1,31 +1,40 @@
 import * as echarts from 'echarts';
-import { useEffect } from 'react'
-import { data } from '../../../lib/mock-data';
-import { useContext } from 'react'
+import { useEffect, useContext, useRef, useState } from 'react'
 import { ThemeContext } from '../../../App';
 import 'echarts/theme/dark';
+import { fetchPieChart } from '../../../lib/data-service';
 
-export const usePieChart = () => {
+export const usePieChart = (id) => {
     const theme = useContext(ThemeContext);
+    const pieChartRef = useRef()
+    const [loaded, setLoaded] = useState(false)
+
     useEffect(() => {
-        const pieChart = echarts.init(document.getElementById('pie-chart'), theme === 'dark' ? theme : null);
-
-        pieChart.setOption({
-            title: {
-                text: ''
-            },
-            tooltip: {},
-            series: [
-                {
-                    type: 'pie',
-                    data: data,
-                    roseType: 'area'
-                }
-            ]
-        });
-
+        if (theme === 'dark') {
+            pieChartRef.current = echarts.init(document.getElementById('pie-chart'), 'dark');
+        } else {
+            pieChartRef.current = echarts.init(document.getElementById('pie-chart'));
+        }
+        fetchPieChart(id).then(data => {
+            setLoaded(true)
+            pieChartRef.current.setOption({
+                title: {
+                    text: ''
+                },
+                tooltip: {},
+                series: [
+                    {
+                        type: 'pie',
+                        data: data,
+                        roseType: 'area'
+                    }
+                ]
+            });
+        })
         return () => {
-            pieChart.dispose();
+            pieChartRef.current.dispose();
         };
     }, [theme])
+
+    return [loaded]
 }

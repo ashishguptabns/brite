@@ -1,39 +1,49 @@
 import * as echarts from 'echarts';
-import { useEffect } from 'react'
-import { useContext } from 'react'
+import { useContext, useRef, useEffect, useState } from 'react'
 import { ThemeContext } from '../../../App';
 import 'echarts/theme/dark';
+import { fetchBarChart } from '../../../lib/data-service';
 
-export const useBarChart = () => {
+export const useBarChart = (id) => {
     const theme = useContext(ThemeContext);
+    const barChartRef = useRef()
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
-        const barChart = echarts.init(document.getElementById('bar-chart'), theme === 'dark' ? theme : null);
+        if (theme === 'dark') {
+            barChartRef.current = echarts.init(document.getElementById('bar-chart'), 'dark');
+        } else {
+            barChartRef.current = echarts.init(document.getElementById('bar-chart'));
+        }
 
-        barChart.setOption({
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                axisLabel: {
-                    color: 'white' // Set text color to white
-                }
-            },
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    color: 'white' // Set text color to white
-                }
-            },
-            series: [
-                {
-                    data: [120, 200, 150, 80, 70, 110, 130],
-                    type: 'bar'
-                }
-            ]
-        });
-
+        fetchBarChart(id).then(data => {
+            setLoaded(true)
+            barChartRef.current.setOption({
+                xAxis: {
+                    type: 'category',
+                    data: data.xAxis,
+                    axisLabel: {
+                        color: 'white' // Set text color to white
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        color: 'white' // Set text color to white
+                    }
+                },
+                series: [
+                    {
+                        data: data.yAxis,
+                        type: 'bar'
+                    }
+                ]
+            });
+        })
         return () => {
-            barChart.dispose();
+            barChartRef.current.dispose();
         };
     }, [theme])
+
+    return [loaded]
 }
