@@ -12,7 +12,7 @@ You may also see any lint errors in the console.
 ## Features covered
 
 1. Themes - click on theme button on top right - done using context API
-2. Data service - For now data is coming from mock file but any remote API can be integrated
+2. Data service - For now data is coming from mock file with an artificial delay. Any remote API can be integrated here
 3. Custom hooks - custom hooks have been created for theme, charts and sheet
 4. Design is responsive - try in portrait mode and refresh
 5. Libraries - styled-components for CSS, echarts for Charting, material UI for table
