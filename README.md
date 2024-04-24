@@ -15,3 +15,4 @@ You may also see any lint errors in the console.
 2. Data service - For now data is coming from mock file but any remote API can be integrated
 3. Custom hooks - custom hooks have been created for theme, charts and sheet
 4. Design is responsive - try in portrait mode and refresh
+5. Libraries - styled-components for CSS, echarts for Charting, material UI for table
