@@ -1,5 +1,7 @@
 ## Execute below lines in order to run the app
 
+### `git clone https://github.com/ashishguptabns/react-demo.git`
+### `git switch options-trading`
 ### `npm i`
 ### `npm start`
 
