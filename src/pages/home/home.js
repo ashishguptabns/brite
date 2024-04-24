@@ -27,7 +27,7 @@ export const Home = ({ onToggleTheme }) => {
                     columns={columns}
                     initialState={{
                         pagination: {
-                            paginationModel: { page: 0, pageSize: 3 },
+                            paginationModel: { page: 0, pageSize: 4 },
                         },
                     }}
                 />

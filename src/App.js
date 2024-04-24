@@ -1,20 +1,25 @@
 import './App.css';
 import { createContext } from 'react'
 import { Home } from './pages/home/home';
-import { useState } from 'react'
+import { useTheme } from './hooks/use-theme';
+import { createTheme, ThemeProvider } from '@mui/material';
 
 export const ThemeContext = createContext('light');
 
 function App() {
 
-  const [theme, setTheme] = useState('light');
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  }
+  const [theme, toggleTheme] = useTheme()
+  const muiTheme = createTheme({
+    palette: {
+      mode: theme,
+    },
+  });
   return (
-    <ThemeContext.Provider value={theme}>
-      <Home onToggleTheme={toggleTheme} />
-    </ThemeContext.Provider>
+    <ThemeProvider theme={muiTheme}>
+      <ThemeContext.Provider value={theme}>
+        <Home onToggleTheme={toggleTheme} />
+      </ThemeContext.Provider>
+    </ThemeProvider>
   );
 }
 

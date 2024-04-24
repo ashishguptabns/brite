@@ -2,6 +2,8 @@ import { styled } from 'styled-components'
 
 export const Container = styled.div`
     display: block;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
 `
 
 export const ChartContainer = styled.div`
@@ -15,12 +17,15 @@ export const ChartContainer = styled.div`
 export const Chart = styled.div`
     width: 100%;
     height: 400px;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
 `
 
 export const Sheet = styled.div`
     width: 95%;
-    height: 400px;
     margin: 0 2.5%;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
 `
 
 export const Theme = styled.button`
@@ -30,4 +35,10 @@ export const Theme = styled.button`
     position: absolute;
     cursor: pointer;
     z-index: 1;
+    background: white;
+    border: 1px solid #c0b9b9;
+    border-radius: 4px;
+    margin: 10px;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
 `
